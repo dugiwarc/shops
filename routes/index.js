@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 // destructuring **new** in ES6
-const { postRegister } = require('../controllers/index');
+const { postRegister } = require('../controllers');
+const { errorHandler } = require('../middleware');
+
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
@@ -14,35 +17,18 @@ router.get('/register', (req, res, next) => {
   });
 });
 
-router.post('/register', postRegister);
+router.post('/register', errorHandler(postRegister));
 
-router.get('/login', (req, res, next) => {
-  res.render('index', {
-    title: 'Express'
-  });
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/login'
+})
+);
+
+router.get('/logout', (req, res, next) => {
+  req.logout();
+  res.redirect('/');
 });
 
-router.get('/profile', (req, res, next) => {
-  res.send('Get /profile');
-});
 
-router.get('/profile/:user_id', (req, res, next) => {
-  res.send('Put /profile/:user_id');
-});
-
-router.get('/forgot', (req, res, next) => {
-  res.send('hi');
-});
-
-router.put('/forgot', (req, res, next) => {
-  res.send('hi');
-});
-
-router.get('/reset/:token', (req, res, next) => {
-  res.send('hi');
-});
-
-router.put('/reset/:token', (req, res, next) => {
-  res.send('hi');
-});
 module.exports = router;
