@@ -1,8 +1,14 @@
 const express = require('express');
 const router = express.Router();
 // destructuring **new** in ES6
-const { postRegister, postLogin, getLogOut } = require('../controllers');
-const { errorHandler } = require('../middleware');
+const {
+  postRegister,
+  postLogin,
+  getLogOut
+} = require('../controllers');
+const {
+  asyncErrorHandler
+} = require('../middleware');
 // const { postLogin } = require('../middleware');
 
 
@@ -21,7 +27,7 @@ router.get('/login', (req, res, next) => {
   res.send('login');
 });
 
-router.post('/register', errorHandler(postRegister));
+router.post('/register', asyncErrorHandler(postRegister));
 
 router.post('/login', postLogin);
 
