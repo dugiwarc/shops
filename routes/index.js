@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const passport = require('passport');
 // destructuring **new** in ES6
-const { postRegister } = require('../controllers');
+const { postRegister, postLogin, getLogOut } = require('../controllers');
 const { errorHandler } = require('../middleware');
+// const { postLogin } = require('../middleware');
 
 
 /* GET home page. */
@@ -17,18 +17,15 @@ router.get('/register', (req, res, next) => {
   });
 });
 
+router.get('/login', (req, res, next) => {
+  res.send('login');
+});
+
 router.post('/register', errorHandler(postRegister));
 
-router.post('/login', passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/login'
-})
-);
+router.post('/login', postLogin);
 
-router.get('/logout', (req, res, next) => {
-  req.logout();
-  res.redirect('/');
-});
+router.get('/logout', getLogOut);
 
 
 module.exports = router;
