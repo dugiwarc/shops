@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+// destructuring **new** in ES6
+const { postRegister } = require('../controllers/index');
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
@@ -12,11 +14,7 @@ router.get('/register', (req, res, next) => {
   });
 });
 
-router.get('/register', (req, res, next) => {
-  res.render('index', {
-    title: 'Express'
-  });
-});
+router.post('/register', postRegister);
 
 router.get('/login', (req, res, next) => {
   res.render('index', {
