@@ -4,7 +4,8 @@ const { errorHandler } = require('../middleware');
 const {
     getPosts,
     newPost,
-    createPost
+    createPost,
+    showPost
 } = require('../controllers/posts');
 
 router.get('/', errorHandler(getPosts));
@@ -13,8 +14,6 @@ router.get('/new', newPost);
 
 router.post('/', errorHandler(createPost));
 
-router.get('/:id', (req, res, next) => {
-    res.send('Test_2');
-});
+router.get('/:id', errorHandler(showPost));
 
 module.exports = router;
