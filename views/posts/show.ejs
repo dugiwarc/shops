@@ -3,6 +3,11 @@
 <div><%= post.description %></div>
 <div><%= post.location %></div>
 <div>
+    <% post.images.forEach(function(image) { %>
+        <img src="<%= image.url %>">
+    <% }); %>
+</div>
+<div>
     <form action="/posts/<%= post.id %>?_method=DELETE" method="post">
         <input type="submit" value="Delete">
     </form>

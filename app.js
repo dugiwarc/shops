@@ -1,5 +1,7 @@
-const createError = require('http-errors');
+require('dotenv').config();
+
 const express = require('express');
+const createError = require('http-errors');
 const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
@@ -21,13 +23,13 @@ const app = express();
 
 mongoose.set('useFindAndModify', false);
 const url = 'mongodb://localhost:27017/shop_app';
-const opts = {
+const opts = {                
   useNewUrlParser: true
 };
 
 mongoose.connect(url, opts);
 
-var db = mongoose.connection;
+const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
   console.log("connected!");

@@ -1,4 +1,10 @@
 const Post = require('../models/post');
+const cloudinary = require('cloudinary');
+cloudinary.config({
+    cloud_name: 'dugiwarc',
+    api_key: '266892371552875',
+    api_secret: process.env.CLOUDINARY_SECRET
+});
 
 module.exports = {
     async postIndex(req, res, next) {
@@ -11,7 +17,15 @@ module.exports = {
     },
 
     async postCreate(req, res, next) {
-        let post = await Post.create(req.body);
+        req.body.post.images = [];
+        for(const file of req.files) {
+            let image = await cloudinary.v2.uploader.upload(file.path);
+            req.body.post.images.push({
+                url: image.secure_url,
+                public_id: image.public_id
+            });
+        }
+        let post = await Post.create(req.body.post);
         res.redirect(`/posts/${post.id}`);
     },
 
