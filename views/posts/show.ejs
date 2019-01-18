@@ -2,4 +2,9 @@
 <p> Price: <%= post.price %> </p>
 <div><%= post.description %></div>
 <div><%= post.location %></div>
+<div>
+    <form action="/posts/<%= post.id %>?_method=DELETE" method="post">
+        <input type="submit" value="Delete">
+    </form>
+</div>
 
